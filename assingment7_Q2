@@ -1,1 +1,101 @@
+_______________________________________________________________________
+sharefile.h
+_______________________________________________________________________
+int Addition(int , int);
 
+int Substraction(int , int);
+
+int Multiplication(int , int);
+
+int Division(int , int);
+________________________________________________________________________
+
+________________________________________________________________________
+                                    sharedfile.c
+________________________________________________________________________
+
+#include"sharedfile.h"
+
+int Addition(int No1, int No2)
+{
+    int iAns = 0;
+
+    iAns = No1 + No2;
+
+    return iAns;
+}
+
+int Substraction(int No1, int No2)
+{
+    int iAns = 0;
+
+    iAns = No1 - No2;
+
+    return iAns;
+}
+
+int Multiplication(int No1, int No2)
+{
+    int iAns = 0;
+
+    iAns = No1 - No2;
+
+    return iAns;
+}
+
+int Division(int No1, int No2)
+{
+    int iAns = 0;
+
+    iAns = No1 / No2;
+
+    return iAns;
+}
+
+/*
+1 - convert .c to .o
+>  gcc -c sharedfile.c -o sharedfile.o
+            (name of 
+            the shared 
+            file)
+
+2 - convert .o to .a
+>  ar rcs sharedfile.a sharedfile.o
+
+
+*/
+___________________________________________________________________________________
+
+___________________________________________________________________________________
+                                  client.h
+____________________________________________________________________________________
+#include<stdio.h>
+#include"sharedfile.h"
+
+int main()
+{
+    int a = 50, b = 25, Ret = 0;
+
+    Ret = Addition(a, b);
+    printf("Addition is : %d\n", Ret);
+
+    Ret = Substraction(a,b);
+    printf("Subraction is : %d\n", Ret);
+
+    Ret = Multiplication(a, b);
+    printf("Multiplication is : %d\n", Ret);
+
+    Ret = Division(a, b);
+    printf("Division is : %d\n", Ret);
+
+    return 0;
+}
+
+/*
+normal c combining syntax  >  gcc         client.c -o myexe
+
+shared compiling syntax    >  gcc -static client.c -o myexe sharedfile.a
+
+./myexe
+*/
+______________________________________________________________________________________________________
