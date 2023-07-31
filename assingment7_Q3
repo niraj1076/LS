@@ -1,1 +1,125 @@
+sharefile.h
+_______________________________________________________________________
 
+void CheckPrime(int);
+
+void CheckPerfect(int);
+________________________________________________________________________
+
+________________________________________________________________________
+                              sharedfile1.c
+________________________________________________________________________
+
+##include<stdbool.h>
+#include<stdio.h>
+#include"sharedfile.h"
+
+void CheckPrime(int No)
+{
+    bool flag = true;
+    
+    for(int iCnt = 2; iCnt < No; iCnt++)
+    {
+        if(No % iCnt == 0)
+        {
+            flag = false;
+            break;
+        }   
+    }
+
+    if(flag == true)
+    {
+        printf("The number %d is a prime number \n", No);
+    }
+    else 
+    {
+        printf("The number %d is not a prime number \n", No);
+
+    }
+}
+
+/*
+1 - convert .c to .o
+>  gcc -c sharedfile.c -o sharedfile.o
+            (name of 
+            the shared 
+            file)
+
+2 - convert .o to .a
+>  ar rcs sharedfile.a sharedfile.o
+
+
+*/
+
+___________________________________________________________________________________
+
+___________________________________________________________________________________
+                              sharedfile2.c
+________________________________________________________________________
+
+#include<stdio.h>
+#include"sharedfile.h"
+
+void CheckPerfect(int No)
+{
+    int SumFact = 0;
+
+    for(int iCnt = 1; iCnt <= (No/2); iCnt++)
+    {
+        if((No % iCnt) == 0)
+        {
+            SumFact = SumFact + iCnt;
+        }
+    }
+
+    if(SumFact == No)
+    {
+        printf("The number %d is Perfect number\n", No);
+    }
+    else
+    {
+        printf("The number %d is Not Perfect number\n", No);
+    }
+}
+
+/*
+1 - convert .c to .o
+>  gcc -c sharedfile.c -o sharedfile.o
+            (name of 
+            the shared 
+            file)
+
+2 - convert .o to .a
+>  ar rcs sharedfile.a sharedfile.o
+
+
+*/
+___________________________________________________________________________________
+
+___________________________________________________________________________________
+                                  client.h
+____________________________________________________________________________________
+
+#include<stdio.h>
+#include"sharedfile.h"
+
+int main()
+{
+    int a = 0, b = 0;
+
+    scanf("%d", &a);
+    scanf("%d", &b);
+
+    CheckPrime(a);
+
+    CheckPerfect(b);
+    
+}
+/*
+normal c combining syntax  >  gcc         client.c -o myexe
+
+shared compiling syntax    >  gcc -static client.c -o myexe sharedfile.a
+
+./myexe
+*/
+______________________________________________________________________________________________________
