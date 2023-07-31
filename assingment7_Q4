@@ -1,0 +1,102 @@
+sharefile.h
+_______________________________________________________________________
+
+int Factorial(int);
+
+void Display(int);
+
+________________________________________________________________________
+
+________________________________________________________________________
+                              sharedfile.c
+________________________________________________________________________
+
+#include<stdio.h>
+#include"sharedInner.c"
+#include"sharedfile.h"
+
+void Display(int No)
+{
+    int iRet = 0;
+
+    iRet = Factorial(No);
+
+    printf("Factorial is : %d\n", iRet);
+
+}
+
+
+/*
+1 - convert .c to .o
+>  gcc -c sharedfile.c -o sharedfile.o
+            (name of 
+            the shared 
+            file)
+
+2 - convert .o to .a
+>  ar rcs sharedfile.a sharedfile.o
+
+
+*/
+
+___________________________________________________________________________________
+
+___________________________________________________________________________________
+                              sharedInner.c
+________________________________________________________________________
+
+#include<stdio.h>
+#include"sharedfile.h"
+
+int Factorial(int No)
+{
+    int Fact = 1;
+
+    for(int iCnt = 1; iCnt <= No; iCnt++)
+    {
+        Fact = Fact * iCnt;
+    }
+
+    return Fact;
+
+}
+
+/*
+1 - convert .c to .o
+>  gcc -c sharedfile.c -o sharedfile.o
+            (name of 
+            the shared 
+            file)
+
+2 - convert .o to .a
+>  ar rcs sharedfile.a sharedfile.o
+
+
+*/
+___________________________________________________________________________________
+
+___________________________________________________________________________________
+                                  client.h
+____________________________________________________________________________________
+
+#include<stdio.h>
+#include"sharedfile.h"
+
+int main()
+{
+    int a = 0;
+
+    scanf("%d", &a);
+
+    Display(a);
+
+    return 0;
+}
+/*
+normal c combining syntax  >  gcc         client.c -o myexe
+
+shared compiling syntax    >  gcc -static client.c -o myexe sharedfile.a
+
+./myexe
+*/
+______________________________________________________________________________________________________
