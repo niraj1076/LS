@@ -1,0 +1,106 @@
+_______________________________________________________________________
+sharefile.h
+_______________________________________________________________________
+
+void CheckFile();
+________________________________________________________________________
+
+________________________________________________________________________
+                                    sharedfile.c
+________________________________________________________________________
+
+#include<stdio.h>
+#include<fcntl.h>
+#include<sys/stat.h>
+#include<string.h>
+
+void CheckFile()
+{
+    int fd1 = 0, fd2 = 0, Ret = 0;
+    struct stat sobj1, sobj2;
+    char File1[30], File2[30];
+    char Buffer1[1024];
+    char Buffer2[1024];
+
+    printf("Enter first file name : \n");
+    scanf("%s", File1);
+
+    printf("Enter second file name : \n");
+    scanf("%s", File2);
+
+    fd1 = open(File1, O_RDONLY);
+    fd2 = open(File2, O_RDONLY);
+
+    if(fd1 == -1 || fd2 == -1)
+    {
+        printf("Unable to open file\n");
+        return -1;
+    }
+
+    fstat(fd1, &sobj1);
+    fstat(fd2, &sobj2);
+
+    if(sobj1.st_size != sobj2.st_size)
+    {
+        printf("File are of diffrent size\n");
+        return -1;
+    }
+
+    while((Ret = read(fd1, Buffer1 , sizeof(Buffer1))) != 0)
+    {
+        Ret = read(fd2, Buffer2, sizeof(Buffer2));
+        if(memcmp(Buffer1, Buffer2, Ret) != 0)
+        {
+            break;
+        }
+    }
+
+    if(Ret == 0)
+    {
+        printf("Both file are indentical\n");
+    }
+    else
+    {
+        printf("Both file are Diffrent\n");
+
+    }
+
+}
+
+
+/*
+1 - convert .c to .o
+>  gcc -c sharedfile.c -o sharedfile.o
+            (name of 
+            the shared 
+            file)
+
+2 - convert .o to .a
+>  ar rcs sharedfile.a sharedfile.o
+
+
+*/
+___________________________________________________________________________________
+
+___________________________________________________________________________________
+                                  client.h
+____________________________________________________________________________________
+#include<stdio.h>
+#include"sharedfile.h"
+
+int main()
+{
+    
+    CheckFile();
+
+    return 0;
+}
+
+/*
+normal c combining syntax  >  gcc         client.c -o myexe
+
+shared compiling syntax    >  gcc -static client.c -o myexe sharedfile.a
+
+./myexe
+*/
+______________________________________________________________________________________________________
