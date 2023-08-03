@@ -1,3 +1,5 @@
+//write a program which creates 4 number of threads and our main wait till the threades terminates
+
 #include<stdio.h>
 #include<pthread.h>
 
